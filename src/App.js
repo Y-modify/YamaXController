@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import './App.css';
 
+window.WebSocket = window.WebSocket || window.MozWebSocket;
+
+const connection = new WebSocket('ws://192.168.2.116:3333');
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -20,6 +24,7 @@ class App extends Component {
         y: data.y
       }
     })
+    connection.send(`pos ${data.x - window.innerWidth/2 - 50} ${data.y - window.innerHeight/2 - 50}`)
   }
 
   handleStop = () => {
@@ -29,6 +34,7 @@ class App extends Component {
         y: window.innerHeight/2 - 50
       }
     })
+    connection.send(`stop`)
   }
 
   render() {

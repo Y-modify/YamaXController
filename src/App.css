@@ -1,8 +1,17 @@
-.control {
+.container {
   display: grid;
 
   grid-template-rows: repeat(3, 33vh);
   grid-template-columns: repeat(3, 33vw);
+}
+
+.control {
+  font-size: 5em;
+  line-height: 2.5em;
+  text-align: center;
+
+  background-color: #0984e3;
+  color: white;
 }
 
 .control-up {

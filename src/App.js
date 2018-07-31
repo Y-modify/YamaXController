@@ -5,17 +5,17 @@ import './App.css';
 class App extends Component {
   render() {
     return (
-      <div className="control">
-        <div className="control-up">
+      <div className="container">
+        <div className="control control-up">
           ↑
         </div>
-        <div className="control-right">
+        <div className="control control-right">
           →
         </div>
-        <div className="control-left">
+        <div className="control control-left">
           ←
         </div>
-        <div className="control-down">
+        <div className="control control-down">
           ↓
         </div>
       </div>

@@ -60,6 +60,9 @@ class App extends Component {
   render() {
     return (
       <div className="container">
+        <svg height="100%" width="100%" className="line-container">
+          <line x1={this.originPosition.x + 50} y1={this.originPosition.y + 50} x2={this.state.position.x + 50} y2={this.state.position.y + 50} className="line" />
+        </svg>
         <Draggable
           position={this.state.position}
           onDrag={this.handleDrag}

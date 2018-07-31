@@ -1,6 +1,9 @@
 .container {
+  position: relative;
   width: 100vw;
   height: 100vh;
+  position: fixed;
+  overflow: hidden;
 }
 
 .control {
@@ -12,7 +15,7 @@
   background-color: #0984e3;
   color: white;
 
-  height: 200px;
-  width: 200px;
-  border-radius: 100px;
+  height: 100px;
+  width: 100px;
+  border-radius: 50px;
 }

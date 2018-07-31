@@ -7,8 +7,8 @@ class App extends Component {
     super(props)
     this.state = {
       position: {
-        x: window.innerWidth/2 - 100,
-        y: window.innerHeight/2 - 100
+        x: window.innerWidth/2 - 50,
+        y: window.innerHeight/2 - 50
       }
     }
   }
@@ -25,8 +25,8 @@ class App extends Component {
   handleStop = () => {
     this.setState({
       position: {
-        x: window.innerWidth/2 - 100,
-        y: window.innerHeight/2 - 100
+        x: window.innerWidth/2 - 50,
+        y: window.innerHeight/2 - 50
       }
     })
   }

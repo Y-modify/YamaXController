@@ -9,15 +9,17 @@ const connection = new WebSocket('ws://192.168.2.116:3333');
 class App extends Component {
   constructor(props) {
     super(props)
+    this.originPosition = {
+      x: window.innerWidth/2 - 50,
+      y: window.innerHeight/2 - 50
+    }
+
     this.state = {
       lastSent: {
         x: 0,
         y: 0
       },
-      position: {
-        x: window.innerWidth/2 - 50,
-        y: window.innerHeight/2 - 50
-      }
+      position: this.originPosition
     }
   }
 
@@ -29,8 +31,9 @@ class App extends Component {
       }
     })
     const {x, y} = this.state.lastSent
-    const relX = data.x - window.innerWidth/2 - 50
-    const relY = data.y - window.innerHeight/2 - 50
+    const orig = this.originPosition
+    const relX = data.x - orig.x
+    const relY = data.y - orig.y
     const len  = Math.sqrt((relX - x)**2 + (relY - y)**2)
     if(len > 20) {
       connection.send(`pos ${relX} ${relY}`)
@@ -45,10 +48,11 @@ class App extends Component {
 
   handleStop = () => {
     this.setState({
-      position: {
-        x: window.innerWidth/2 - 50,
-        y: window.innerHeight/2 - 50
-      }
+      lastSent: {
+        x: 0,
+        y: 0
+      },
+      position: this.originPosition
     })
     connection.send(`stop`)
   }

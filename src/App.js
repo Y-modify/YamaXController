@@ -10,6 +10,10 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      lastSent: {
+        x: 0,
+        y: 0
+      },
       position: {
         x: window.innerWidth/2 - 50,
         y: window.innerHeight/2 - 50
@@ -24,7 +28,19 @@ class App extends Component {
         y: data.y
       }
     })
-    connection.send(`pos ${data.x - window.innerWidth/2 - 50} ${data.y - window.innerHeight/2 - 50}`)
+    const {x, y} = this.state.lastSent
+    const relX = data.x - window.innerWidth/2 - 50
+    const relY = data.y - window.innerHeight/2 - 50
+    const len  = Math.sqrt((relX - x)**2 + (relY - y)**2)
+    if(len > 20) {
+      connection.send(`pos ${relX} ${relY}`)
+      this.setState({
+        lastSent: {
+          x: relX,
+          y: relY
+        }
+      })
+    }
   }
 
   handleStop = () => {

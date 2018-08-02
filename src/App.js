@@ -89,8 +89,8 @@ class App extends Component {
             <FaRobot />
           </div>
         </Draggable>
-        <div className="sit-button-container" onClick={this.handleSit}>
-          <div className="sit-button">
+        <div className="sit-button-container">
+          <div className="sit-button" onClick={this.handleSit}>
             {this.state.is_sitting ? <FaBolt /> : <FaCoffee />}
           </div>
         </div>

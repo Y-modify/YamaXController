@@ -68,6 +68,13 @@ class App extends Component {
     this.connection.send(`stop`)
   }
 
+  handleSit = () => {
+    this.connection.send(this.state.is_sitting ? 'situp' : 'sitdown')
+    this.setState({
+      is_sitting: !this.state.is_sitting
+    })
+  }
+
   render() {
     return (
       <div className="container">
@@ -82,7 +89,7 @@ class App extends Component {
             <FaRobot />
           </div>
         </Draggable>
-        <div className="sit-button-container">
+        <div className="sit-button-container" onClick={this.handleSit}>
           <div className="sit-button">
             {this.state.is_sitting ? <FaBolt /> : <FaCoffee />}
           </div>

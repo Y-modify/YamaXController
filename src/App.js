@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
+import { FaRobot } from 'react-icons/fa';
 import './App.css';
 
 window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -68,6 +69,7 @@ class App extends Component {
           onDrag={this.handleDrag}
           onStop={this.handleStop}>
           <div className="control">
+            <FaRobot />
           </div>
         </Draggable>
       </div>

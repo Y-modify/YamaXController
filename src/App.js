@@ -68,7 +68,7 @@ class App extends Component {
           position={this.state.position}
           onDrag={this.handleDrag}
           onStop={this.handleStop}>
-          <div className="control">
+          <div className="control" style={{backgroundColor: connection.readyState === WebSocket.OPEN ? "#0984e3" : "#d63031"}}>
             <FaRobot />
           </div>
         </Draggable>

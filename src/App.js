@@ -5,8 +5,6 @@ import './App.css';
 
 window.WebSocket = window.WebSocket || window.MozWebSocket;
 
-const connection = new WebSocket('ws://192.168.2.116:3333');
-
 class App extends Component {
   constructor(props) {
     super(props)
@@ -15,7 +13,15 @@ class App extends Component {
       y: window.innerHeight/2 - 50
     }
 
+    this.connection = new WebSocket('ws://192.168.2.116:3333');
+    this.connection.onopen = () => {
+      this.setState({
+        connectionState: this.connection.readyState
+      })
+    }
+
     this.state = {
+      connectionState: WebSocket.CONNECTING,
       lastSent: {
         x: 0,
         y: 0
@@ -37,7 +43,7 @@ class App extends Component {
     const relY = data.y - orig.y
     const len  = Math.sqrt((relX - x)**2 + (relY - y)**2)
     if(len > 20) {
-      connection.send(`pos ${relX} ${relY}`)
+      this.connection.send(`pos ${relX} ${relY}`)
       this.setState({
         lastSent: {
           x: relX,
@@ -55,7 +61,7 @@ class App extends Component {
       },
       position: this.originPosition
     })
-    connection.send(`stop`)
+    this.connection.send(`stop`)
   }
 
   render() {
@@ -68,7 +74,7 @@ class App extends Component {
           position={this.state.position}
           onDrag={this.handleDrag}
           onStop={this.handleStop}>
-          <div className="control" style={{backgroundColor: connection.readyState === WebSocket.OPEN ? "#0984e3" : "#d63031"}}>
+          <div className="control" style={{backgroundColor: this.state.connectionState === WebSocket.OPEN ? "#0984e3" : "#d63031"}}>
             <FaRobot />
           </div>
         </Draggable>

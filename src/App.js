@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { FaCoffee, FaBolt } from 'react-icons/fa';
 import qs from 'querystring'
 
 import Controller from './Controller'
+import SitButton from './SitButton'
 
 import './App.css';
 
@@ -21,8 +21,7 @@ class App extends Component {
     }
 
     this.state = {
-      connectionState: WebSocket.CONNECTING,
-      is_sitting: false
+      connectionState: WebSocket.CONNECTING
     }
   }
 
@@ -34,22 +33,15 @@ class App extends Component {
     this.connection.send(`stop`)
   }
 
-  handleSit = () => {
-    this.connection.send(this.state.is_sitting ? 'situp' : 'sitdown')
-    this.setState({
-      is_sitting: !this.state.is_sitting
-    })
+  handleSit = (is_sitting) => {
+    this.connection.send(is_sitting ? 'situp' : 'sitdown')
   }
 
   render() {
     return (
       <div className="container">
         <Controller onDrag={this.handleDrag} onStop={this.handleStop} connectionState={this.state.connectionState} />
-        <div className="sit-button-container">
-          <div className="sit-button" onClick={this.handleSit}>
-            {this.state.is_sitting ? <FaBolt /> : <FaCoffee />}
-          </div>
-        </div>
+        <SitButton onTap={this.handleSit} />
       </div>
     );
   }

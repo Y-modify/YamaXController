@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
-import { FaRobot } from 'react-icons/fa';
+import { FaRobot, FaCoffee, FaBolt } from 'react-icons/fa';
 import qs from 'querystring'
 
 import './App.css';
@@ -29,7 +29,8 @@ class App extends Component {
         x: 0,
         y: 0
       },
-      position: this.originPosition
+      position: this.originPosition,
+      is_sitting: false
     }
   }
 
@@ -81,6 +82,9 @@ class App extends Component {
             <FaRobot />
           </div>
         </Draggable>
+        <div className="button">
+          {this.state.is_sitting ? <FaBolt /> : <FaCoffee />}
+        </div>
       </div>
     );
   }

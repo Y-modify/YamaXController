@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
 import { FaRobot } from 'react-icons/fa';
+import qs from 'querystring'
+
 import './App.css';
 
 window.WebSocket = window.WebSocket || window.MozWebSocket;
@@ -13,7 +15,8 @@ class App extends Component {
       y: window.innerHeight/2 - 50
     }
 
-    this.connection = new WebSocket('ws://192.168.2.116:3333');
+    const host = qs.parse(window.location.search.substr(1)).host
+    this.connection = new WebSocket(host ? `ws://${host}` : 'ws://192.168.2.116:3333');
     this.connection.onopen = () => {
       this.setState({
         connectionState: this.connection.readyState

@@ -6,30 +6,6 @@
   overflow: hidden;
 }
 
-.control {
-  font-size: 3em;
-  line-height: 2.2em;
-  text-align: center;
-  cursor: pointer;
-
-  color: white;
-
-  height: 100px;
-  width: 100px;
-  border-radius: 50px;
-
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
-.line-container {
-  position: absolute;
-}
-
-.line {
-  stroke: rgb(0, 0, 0);
-  stroke-width: 2;
-}
-
 .sit-button-container {
   position: absolute;
   bottom: 10%;

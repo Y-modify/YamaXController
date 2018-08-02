@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import Draggable from 'react-draggable';
-import { FaRobot, FaCoffee, FaBolt } from 'react-icons/fa';
+import { FaCoffee, FaBolt } from 'react-icons/fa';
 import qs from 'querystring'
+
+import Controller from './Controller'
 
 import './App.css';
 
@@ -10,10 +11,6 @@ window.WebSocket = window.WebSocket || window.MozWebSocket;
 class App extends Component {
   constructor(props) {
     super(props)
-    this.originPosition = {
-      x: window.innerWidth/2 - 50,
-      y: window.innerHeight/2 - 50
-    }
 
     const host = qs.parse(window.location.search.substr(1)).host
     this.connection = new WebSocket(host ? `ws://${host}` : 'ws://192.168.2.116:3333');
@@ -25,46 +22,15 @@ class App extends Component {
 
     this.state = {
       connectionState: WebSocket.CONNECTING,
-      lastSent: {
-        x: 0,
-        y: 0
-      },
-      position: this.originPosition,
       is_sitting: false
     }
   }
 
-  handleDrag = (e, data) => {
-    this.setState({
-      position: {
-        x: data.x,
-        y: data.y
-      }
-    })
-    const {x, y} = this.state.lastSent
-    const orig = this.originPosition
-    const relX = data.x - orig.x
-    const relY = data.y - orig.y
-    const len  = Math.sqrt((relX - x)**2 + (relY - y)**2)
-    if(len > 20) {
-      this.connection.send(`pos ${relX} ${relY}`)
-      this.setState({
-        lastSent: {
-          x: relX,
-          y: relY
-        }
-      })
-    }
+  handleDrag = ({x, y}) => {
+    this.connection.send(`pos ${x} ${y}`)
   }
 
   handleStop = () => {
-    this.setState({
-      lastSent: {
-        x: 0,
-        y: 0
-      },
-      position: this.originPosition
-    })
     this.connection.send(`stop`)
   }
 
@@ -78,17 +44,7 @@ class App extends Component {
   render() {
     return (
       <div className="container">
-        <svg height="100%" width="100%" className="line-container">
-          <line x1={this.originPosition.x + 50} y1={this.originPosition.y + 50} x2={this.state.position.x + 50} y2={this.state.position.y + 50} className="line" />
-        </svg>
-        <Draggable
-          position={this.state.position}
-          onDrag={this.handleDrag}
-          onStop={this.handleStop}>
-          <div className="control" style={{backgroundColor: this.state.connectionState === WebSocket.OPEN ? "#0984e3" : "#d63031"}}>
-            <FaRobot />
-          </div>
-        </Draggable>
+        <Controller onDrag={this.handleDrag} onStop={this.handleStop} connectionState={this.state.connectionState} />
         <div className="sit-button-container">
           <div className="sit-button" onClick={this.handleSit}>
             {this.state.is_sitting ? <FaBolt /> : <FaCoffee />}
